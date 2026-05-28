@@ -371,6 +371,13 @@ margin-bottom:1.5rem;
 line-height:2;
 
 }
+<p class="start-line">
+― 事件はここから始まる ―
+</p>
+
+<div id="countdown" class="countdown">
+LOADING...
+</div>
 
 .hero-title{
 
@@ -726,6 +733,67 @@ grid-template-columns:1fr;
 </style>
 </head>
 
+<style>
+
+.start-line{
+
+margin-bottom:1.8rem;
+
+font-size:.95rem;
+
+letter-spacing:.25em;
+
+color:#a11b1b;
+
+font-weight:700;
+
+animation:redPulse 2s infinite;
+
+text-shadow:
+0 0 10px rgba(161,27,27,.35);
+
+}
+
+@keyframes redPulse{
+
+0%{
+opacity:.45;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+opacity:.45;
+}
+
+}
+
+.countdown{
+
+margin-top:1rem;
+
+font-size:1rem;
+
+letter-spacing:.15em;
+
+color:#cfd7e8;
+
+opacity:.88;
+
+}
+
+.countdown strong{
+
+font-size:1.4rem;
+
+color:#ffffff;
+
+}
+
+</style>
+
 <body>
 
 <div id="intro">
@@ -945,6 +1013,79 @@ setTimeout(type,18);
 setTimeout(type,900);
 
 </script>
+<script>
 
+function updateCountdown(){
+
+const countdown=
+document.getElementById('countdown');
+
+/* 2026/6/6 */
+
+const targetDate=
+new Date('2026-06-06T00:00:00');
+
+const now=
+new Date();
+
+const diff=
+targetDate-now;
+
+/* 当日 */
+
+if(
+now.getFullYear()===2026 &&
+now.getMonth()===5 &&
+now.getDate()===6
+){
+
+countdown.innerHTML=
+'<strong>本日開催！</strong>';
+
+return;
+
+}
+
+/* 開催後 */
+
+if(diff<=0){
+
+countdown.innerHTML=
+'イベントは終了しました';
+
+return;
+
+}
+
+const days=
+Math.floor(diff/(1000*60*60*24));
+
+const hours=
+Math.floor(
+(diff%(1000*60*60*24))
+/
+(1000*60*60)
+);
+
+const minutes=
+Math.floor(
+(diff%(1000*60*60))
+/
+(1000*60)
+);
+
+countdown.innerHTML=
+`開催まで
+<strong>${days}</strong>日
+${hours}時間
+${minutes}分`;
+
+}
+
+updateCountdown();
+
+setInterval(updateCountdown,1000);
+
+</script>
 </body>
 </html>
